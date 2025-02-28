@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Davis Fest - Pool Party</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .wave-divider {
+            position: relative;
+            height: 150px;
+            overflow: hidden;
+        }
+        .wave-divider svg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .event-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        body {
+            background: linear-gradient(to right, #f0f9ff, #e0f2fe, #f0f9ff);
+        }
+        .hero-pattern {
+            background-image: url('data:image/svg+xml,<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><path d="M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z" fill="%230EA5E9" fill-opacity="0.1" fill-rule="evenodd"/></svg>');
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .countdown-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #0284c7;
+        }
+        .countdown-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Hero Section -->
+    <header class="hero-pattern bg-gradient-to-r from-blue-500 to-cyan-400 text-white relative overflow-hidden">
+        <div class="container mx-auto px-4 py-16 md:py-24">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-4 animate-pulse">Davis Fest</h1>
+                <p class="text-2xl md:text-3xl mb-8 font-light">La Pool Party del año</p>
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+                    <div class="flex items-center bg-white bg-opacity-20 rounded-full px-6 py-3">
+                        <i class="fas fa-calendar-alt mr-2"></i>
+                        <span>8 de marzo, 2025</span>
+                    </div>
+                    <div class="flex items-center bg-white bg-opacity-20 rounded-full px-6 py-3">
+                        <i class="fas fa-clock mr-2"></i>
+                        <span>5:00 PM</span>
+                    </div>
+                    <div class="flex items-center bg-white bg-opacity-20 rounded-full px-6 py-3">
+                        <i class="fas fa-swimming-pool mr-2"></i>
+                        <span>La Esperanza, Colón, QRO</span>
+                    </div>
+                </div>
+                <div class="mt-8">
+                    <div class="countdown bg-white bg-opacity-10 p-6 rounded-xl shadow-lg">
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="days">00</span>
+                            <span class="countdown-label">Días</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="hours">00</span>
+                            <span class="countdown-label">Horas</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="minutes">00</span>
+                            <span class="countdown-label">Minutos</span>
+                        </div>
+                        <div class="countdown-item">
+                            <span class="countdown-value" id="seconds">00</span>
+                            <span class="countdown-label">Segundos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wave-divider">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                <path fill="#fff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,224C672,213,768,171,864,154.7C960,139,1056,149,1152,144C1248,139,1344,117,1392,106.7L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Activities Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-blue-600">Dinámicas y Juegos</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Disfruta de una tarde llena de diversión con juegos acuáticos, competencias y mucho más para todos los asistentes.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Event Card 1 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Voleibol Acuático</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">5:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">Forma tu equipo de 3 personas y compite en este emocionante torneo de voleibol en la piscina. ¡Hay premios para los ganadores!</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-trophy mr-2"></i>
+                            <span>Premios para el equipo ganador</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 2 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Búsqueda del Tesoro</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">6:15 PM</span>
+                        </div>
+                        <p class="text-gray-600">Busca objetos escondidos dentro y fuera de la piscina siguiendo las pistas que se te darán. ¡El primero en encontrar todos gana!</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-map-marked-alt mr-2"></i>
+                            <span>Aventura para todas las edades</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 3 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Carrera de Flotadores</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">7:00 PM</span>
+                        </div>
+                        <p class="text-gray-600">Monta en tu flotador y rema con las manos para llegar primero a la meta. Una divertida carrera llena de risas y chapuzones.</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-life-ring mr-2"></i>
+                            <span>Flotadores proporcionados</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 4 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Concurso de Clavados</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">7:45 PM</span>
+                        </div>
+                        <p class="text-gray-600">Demuestra tus mejores acrobacias en el agua. Un jurado evaluará el estilo, la creatividad y el chapuzón de cada participante.</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-star mr-2"></i>
+                            <span>Puntuaciones del público</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 5 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Limbo Acuático</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">8:30 PM</span>
+                        </div>
+                        <p class="text-gray-600">El clásico juego del limbo pero dentro de la piscina. ¿Qué tan bajo puedes llegar sin caerte o mojarte la cara?</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-music mr-2"></i>
+                            <span>Con música caribeña en vivo</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event Card 6 -->
+                <div class="event-card bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-bold text-blue-600">Fiesta de Luces</h3>
+                            <span class="bg-blue-500 text-white text-sm py-1 px-3 rounded-full">9:00 PM</span>
+                        </div>
+                        <p class="text-gray-600">La piscina se iluminará con luces de colores mientras disfrutamos de música y baile dentro y fuera del agua. ¡La diversión no para!</p>
+                        <div class="mt-4 flex items-center text-blue-500">
+                            <i class="fas fa-lightbulb mr-2"></i>
+                            <span>Espectáculo audiovisual</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Section -->
+    <section class="py-16 bg-gradient-to-r from-blue-50 to-cyan-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-blue-600">Ubicación</h2>
+            <div class="max-w-4xl mx-auto rounded-xl overflow-hidden shadow-lg">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3732.5793964879!2d-100.08486252542614!3d20.68115779868722!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x85d33f9feae61e91%3A0xd9a14d65bb3e8cb6!2sLa%20Esperanza%2C%20Col%C3%B3n%2C%20Qro.!5e0!3m2!1ses-419!2smx!4v1709144487201!5m2!1ses-419!2smx" 
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="mt-8 text-center">
+                <p class="text-xl text-gray-700 mb-4">La Esperanza, Colón, Querétaro</p>
+                <a href="https://maps.app.goo.gl/4EaWPtDqGcAP8EsFA?g_st=aw" target="_blank" class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-full transition duration-300">
+                    <i class="fas fa-directions mr-2"></i>
+                    Cómo llegar
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-blue-600">Información Adicional</h2>
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">Lo que debes traer</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Traje de baño</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Toalla</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Protector solar</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Sandalias o chanclas</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>Ropa de cambio</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span>¡Muchas ganas de divertirte!</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-xl shadow-md p-8">
+                    <h3 class="text-2xl font-bold text-blue-600 mb-4">Contacto</h3>
+                    <p class="text-gray-600 mb-6">Para más información o preguntas específicas, no dudes en contactarnos:</p>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 rounded-full p-3 mr-4">
+                                <i class="fas fa-phone text-blue-600"></i>
+                            </div>
+                            <span>(442) 123-4567</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 rounded-full p-3 mr-4">
+                                <i class="fas fa-envelope text-blue-600"></i>
+                            </div>
+                            <span>info@davisfest.com</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="bg-blue-100 rounded-full p-3 mr-4">
+                                <i class="fab fa-instagram text-blue-600"></i>
+                            </div>
+                            <span>@davisfest</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-blue-600 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">Davis Fest</h2>
+            <p class="mb-6">¡Te esperamos para la mejor pool party del año!</p>
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition duration-300">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition duration-300">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition duration-300">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="bg-white bg-opacity-20 hover:bg-opacity-30 rounded-full p-3 transition duration-300">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+            <p class="text-sm opacity-70">© 2025 Davis Fest. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown timer
+        function updateCountdown() {
+            const eventDate = new Date('March 8, 2025 17:00:00').getTime();
+            const now = new Date().getTime();
+            const distance = eventDate - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                clearInterval(countdownTimer);
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
+            }
+        }
+        
+        // Initialize countdown
+        updateCountdown();
+        const countdownTimer = setInterval(updateCountdown, 1000);
+        
+        // Animation for event cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const eventCards = document.querySelectorAll('.event-card');
+            eventCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.classList.add('opacity-100');
+                    card.classList.remove('opacity-0');
+                }, 100 * index);
+            });
+        });
+    </script>
+</body>
+</html>
